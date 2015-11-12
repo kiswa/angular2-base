@@ -1,0 +1,26 @@
+{
+  "name": "angular2-base",
+  "version": "0.0.1",
+  "description": "A base project for Angular2 apps with Gulp.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Ross <root@matthewross.me> (http://matthewross.me)",
+  "license": "MIT",
+  "devDependencies": {
+    "angular2": "^2.0.0-alpha.45",
+    "del": "^2.0.2",
+    "fb-flo": "^0.5.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-ruby-sass": "^2.0.5",
+    "gulp-scss-lint": "^0.3.8",
+    "gulp-typescript": "^2.9.2",
+    "normalize.css": "^3.0.3",
+    "systemjs": "^0.19.5",
+    "traceur": "0.0.92"
+  }
+}
