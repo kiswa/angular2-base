@@ -56,7 +56,6 @@ gulp.task('tsc', function() {
             .pipe(tsc(tsProject));
 
     return tsResult.js
-        .pipe(concat('app.js'))
         .pipe(gulp.dest(dist + 'js/'));
 });
 

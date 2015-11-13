@@ -11,7 +11,10 @@
     </head>
     <body>
         <script>
-            System.import('js/app.js');
+            System.config({
+                packages: { 'js': { defaultExtension: 'js' } }
+            });
+            System.import('js/app');
         </script>
 
         <my-app>Loading...</my-app>
