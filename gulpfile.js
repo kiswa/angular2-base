@@ -98,7 +98,7 @@ gulp.task('watch', function() {
     gulp.start('fb-flo');
 
     watchTs.on('change', onChanged);
-    watchCss.on('change', onChanged);
+    watchScss.on('change', onChanged);
     watchHtml.on('change', onChanged);
 });
 

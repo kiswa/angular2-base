@@ -20,7 +20,6 @@
     "gulp-scss-lint": "^0.3.8",
     "gulp-typescript": "^2.9.2",
     "normalize.css": "^3.0.3",
-    "systemjs": "^0.19.5",
-    "traceur": "0.0.92"
+    "systemjs": "^0.19.5"
   }
 }
