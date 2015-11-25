@@ -1,0 +1,22 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: darken(#fff, 5%);
+}
+
+.container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto;
+    padding: 1em;
+    width: 50%;
+}
