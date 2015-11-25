@@ -8,6 +8,8 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     cssPrefixer = require('gulp-autoprefixer'),
 
+    imageMin = require('gulp-imagemin'),
+
     node,
     spawn = require('child_process').spawn,
     exec = require('child_process').exec,
@@ -18,6 +20,7 @@ var gulp = require('gulp'),
         tsconfig: src + 'ts/tsconfig.json',
         ts: src + 'ts/**/*.ts',
         html: src + '**/*.html',
+        images: src + 'images/**/*.*',
         scss: src + 'scss/**/*.scss',
         scssmain: src + 'scss/main.scss'
     };
@@ -29,6 +32,12 @@ gulp.task('clean', function() {
 gulp.task('html', function() {
     return gulp.src(paths.html)
         .pipe(gulp.dest(dist));
+});
+
+gulp.task('images', function() {
+    return gulp.src(paths.images)
+        .pipe(imageMin())
+        .pipe(gulp.dest(dist + 'images/'));
 });
 
 gulp.task('lintScss', function() {
@@ -89,6 +98,7 @@ gulp.task('watch', function() {
     var watchTs = gulp.watch(paths.ts, ['tsc']),
         watchScss = gulp.watch(paths.scss, ['lintScss', 'styles']),
         watchHtml = gulp.watch(paths.html, ['html']),
+        watchImages = gulp.watch(paths.images, ['images']),
 
         onChanged = function(event) {
             console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
@@ -99,6 +109,7 @@ gulp.task('watch', function() {
     watchTs.on('change', onChanged);
     watchScss.on('change', onChanged);
     watchHtml.on('change', onChanged);
+    watchImages.on('change', onChanged);
 });
 
-gulp.task('default', ['tsc', 'vendor', 'html', 'lintScss', 'styles']);
+gulp.task('default', ['tsc', 'vendor', 'html', 'images', 'lintScss', 'styles']);
