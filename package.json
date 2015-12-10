@@ -10,8 +10,10 @@
   "author": "Matthew Ross <root@matthewross.me> (http://matthewross.me)",
   "license": "MIT",
   "devDependencies": {
-    "angular2": "^2.0.0-alpha.48",
+    "angular2": "^2.0.0-alpha.50",
     "del": "^2.2.0",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.13",
     "fb-flo": "^0.5.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -21,6 +23,9 @@
     "gulp-scss-lint": "^0.3.8",
     "gulp-typescript": "^2.10.0",
     "normalize.css": "^3.0.3",
-    "systemjs": "^0.19.6"
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-alpha.14",
+    "systemjs": "^0.19.6",
+    "zone.js": "^0.5.8"
   }
 }
