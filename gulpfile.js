@@ -17,8 +17,8 @@ var gulp = require('gulp'),
     src = 'src/',
     dist = 'dist/',
     paths = {
-        tsconfig: src + 'ts/tsconfig.json',
-        ts: src + 'ts/**/*.ts',
+        tsconfig: src + 'app/tsconfig.json',
+        ts: src + 'app/**/*.ts',
         html: src + '**/*.html',
         images: src + 'images/**/*.*',
         scss: src + 'scss/**/*.scss',
@@ -65,7 +65,7 @@ gulp.task('tsc', function() {
             .pipe(tsc(tsProject));
 
     return tsResult.js
-        .pipe(gulp.dest(dist + 'js/'));
+        .pipe(gulp.dest(dist + 'app/'));
 });
 
 gulp.task('vendor', function() {
