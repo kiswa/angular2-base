@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     src = 'src/',
     dist = 'dist/',
     paths = {
+        tsconfig: src + 'app/tsconfig.json',
         ts: src + 'app/**/*.ts',
         html: src + '**/*.html',
         images: src + 'images/**/*.*',
@@ -59,7 +60,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('tsc', function() {
-    var tsProject = tsc.createProject('tsconfig.json'),
+    var tsProject = tsc.createProject(paths.tsconfig),
         tsResult = tsProject.src()
             .pipe(tsc(tsProject));
 
