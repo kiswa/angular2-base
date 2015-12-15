@@ -71,7 +71,9 @@ gulp.task('tsc', function() {
 gulp.task('vendor', function() {
     var js = gulp.src([
             'node_modules/systemjs/dist/system.js',
-            'node_modules/angular2/bundles/angular2.dev.js'
+            'node_modules/angular2/bundles/angular2.dev.js',
+            'node_modules/rxjs/bundles/Rx.js',
+            'node_modules/reflect-metadata/Reflect.js'
         ], { base: 'node_modules/'})
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest(dist + 'js/'));
