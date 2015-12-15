@@ -1,0 +1,16 @@
+{
+    "version": "1.5.0",
+    "exclude": [
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
+}
