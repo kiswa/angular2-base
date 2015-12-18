@@ -71,9 +71,10 @@ gulp.task('tsc', function() {
 gulp.task('vendor', function() {
     var js = gulp.src([
             'node_modules/systemjs/dist/system.js',
-            'node_modules/angular2/bundles/angular2.dev.js',
+            //'node_modules/es6-shim/es6-shim.js', // Uncomment to support older browsers
+            'node_modules/angular2/bundles/angular2-polyfills.js',
             'node_modules/rxjs/bundles/Rx.js',
-            'node_modules/reflect-metadata/Reflect.js'
+            'node_modules/angular2/bundles/angular2.dev.js'
         ], { base: 'node_modules/'})
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest(dist + 'js/'));
