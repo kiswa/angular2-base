@@ -1,12 +1,15 @@
 var gulp = require('gulp'),
     del = require('del'),
     concat = require('gulp-concat'),
-    tsc = require('gulp-typescript'),
     merge = require('merge-stream'),
+
+    tsc = require('gulp-typescript'),
+    jsMinify = require('gulp-uglify'),
 
     scsslint = require('gulp-scss-lint'),
     sass = require('gulp-ruby-sass'),
     cssPrefixer = require('gulp-autoprefixer'),
+    cssMinify = require('gulp-cssnano'),
 
     imageMin = require('gulp-imagemin'),
 
@@ -22,7 +25,20 @@ var gulp = require('gulp'),
         html: src + '**/*.html',
         images: src + 'images/**/*.*',
         scss: src + 'scss/**/*.scss',
-        scssmain: src + 'scss/main.scss'
+        scssmain: src + 'scss/main.scss',
+        vendor: {
+            js: [
+                'node_modules/angular2/bundles/angular2-polyfills.js',
+                'node_modules/es6-shim/es6-shim.js',
+                'node_modules/systemjs/dist/system-polyfills.src.js',
+                'node_modules/systemjs/dist/system.src.js',
+                'node_modules/rxjs/bundles/Rx.js',
+                'node_modules/angular2/bundles/angular2.dev.js'
+            ],
+            css: [
+                'node_modules/normalize.css/normalize.css'
+            ]
+        }
     };
 
 gulp.task('clean', function() {
@@ -46,14 +62,7 @@ gulp.task('lintScss', function() {
 });
 
 gulp.task('styles', function() {
-    return sass(paths.scssmain,
-            {
-                precision: 10,
-                // loadpath: [
-                //     bourbon,
-                //     neat
-                // ]
-            })
+    return sass(paths.scssmain, { precision: 10 })
         .pipe(concat('styles.css'))
         .pipe(cssPrefixer())
         .pipe(gulp.dest(dist + 'css/'));
@@ -69,21 +78,25 @@ gulp.task('tsc', function() {
 });
 
 gulp.task('vendor', function() {
-    var js = gulp.src([
-            'node_modules/systemjs/dist/system.js',
-            //'node_modules/es6-shim/es6-shim.js', // Uncomment to support older browsers
-            'node_modules/angular2/bundles/angular2-polyfills.js',
-            'node_modules/rxjs/bundles/Rx.js',
-            'node_modules/angular2/bundles/angular2.dev.js'
-        ], { base: 'node_modules/'})
+    var js = gulp.src(paths.vendor.js)
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest(dist + 'js/'));
 
-    var css = gulp.src('node_modules/normalize.css/normalize.css')
+    var css = gulp.src(paths.vendor.css)
         .pipe(concat('vendor.css'))
         .pipe(gulp.dest(dist + 'css/'));
 
     return merge(js, css);
+});
+
+gulp.task('minify', function() {
+    var js = gulp.src(dist + 'js/vendor.js')
+        .pipe(jsMinify())
+        .pipe(gulp.dest(dist + 'js/'));
+
+    var css = gulp.src(dist + 'css/vendor.css')
+        .pipe(cssMinify())
+        .pipe(gulp.dest(dist + 'css/'));
 });
 
 gulp.task('fb-flo', function() {
