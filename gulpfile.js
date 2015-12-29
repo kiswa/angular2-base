@@ -97,6 +97,15 @@ gulp.task('minify', function() {
     var css = gulp.src(dist + 'css/vendor.css')
         .pipe(cssMinify())
         .pipe(gulp.dest(dist + 'css/'));
+
+    var styles = gulp.src(dist + 'css/styles.css')
+        .pipe(cssMinify())
+        .pipe(gulp.dest(dist + 'css/'));
+
+    var merged = merge(js, css);
+    merged.add(styles);
+
+    return merged;
 });
 
 gulp.task('fb-flo', function() {

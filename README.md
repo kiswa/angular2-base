@@ -6,6 +6,8 @@ Clone the repo to where you want to use it, then install the npm packages with `
 
 To generate the output directory `dist/` run the command `gulp`.
 
+For a production setup, uncomment the lines in `boot.ts` to put Angular in production mode. Then, run the minification task to minify vendor files `gulp minify`.
+
 You may want to run `gulp watch` in a stand-alone terminal to have the output automatically updated when you save changes.
 
 If you install the [fb-flo plugin](https://chrome.google.com/webstore/detail/fb-flo/ahkfhobdidabddlalamkkiafpipdfchp) on Chromium (Chrome) you can have automatic browser refresh as well.
