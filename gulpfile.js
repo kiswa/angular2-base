@@ -110,7 +110,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('test', ['tsc', 'vendor'], function() {
-    return gulp.src('test/**.spec.js')
+    return gulp.src('test/**/*.spec.js')
         .pipe(mocha());
 });
 
