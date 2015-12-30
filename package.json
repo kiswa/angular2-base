@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "angular2": "^2.0.0-beta.0",
+    "chai": "^3.4.1",
     "del": "^2.2.0",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
@@ -20,6 +21,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
+    "gulp-mocha": "^2.2.0",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-scss-lint": "^0.3.8",
     "gulp-typescript": "^2.10.0",

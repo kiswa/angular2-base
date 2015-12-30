@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 
     tsc = require('gulp-typescript'),
     jsMinify = require('gulp-uglify'),
+    mocha = require('gulp-mocha'),
 
     scsslint = require('gulp-scss-lint'),
     sass = require('gulp-ruby-sass'),
@@ -106,6 +107,11 @@ gulp.task('minify', function() {
     merged.add(styles);
 
     return merged;
+});
+
+gulp.task('test', ['tsc', 'vendor'], function() {
+    return gulp.src('test/**.spec.js')
+        .pipe(mocha());
 });
 
 gulp.task('fb-flo', function() {
