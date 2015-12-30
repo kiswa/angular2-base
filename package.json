@@ -5,7 +5,10 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp",
+    "clean": "gulp clean",
+    "watch": "gulp watch",
+    "test": "gulp test"
   },
   "author": "Matthew Ross <root@matthewross.me> (http://matthewross.me)",
   "license": "MIT",
