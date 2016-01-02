@@ -16,7 +16,8 @@
                     'app': { defaultExtension: 'js' }
                 }
             });
-            System.import('app/boot');
+            System.import('app/boot')
+                .then(null, console.error.bind(console));
         </script>
 
         <app-component class="container">Loading...</app-component>

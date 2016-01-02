@@ -8,13 +8,16 @@ html {
     box-sizing: inherit;
 }
 
+$background: #fff;
+$border: #ccc;
+
 body {
-    background-color: darken(#fff, 5%);
+    background-color: darken($background, 5%);
 }
 
 .container {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: $background;
+    border: 1px solid $border;
     display: block;
     margin: 1em auto;
     padding: 1em;
