@@ -146,12 +146,14 @@ gulp.task('watch', function() {
 
 gulp.task('watchtests', function() {
     var watchTests = gulp.watch(paths.tests, ['test']),
+        watchTs = gulp.watch(paths.ts, ['test']),
 
         onChanged = function(event) {
             console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
         };
 
     watchTests.on('change', onChanged);
+    watchTs.on('change', onChanged);
 });
 
 gulp.task('default', ['tsc', 'vendor', 'html', 'images', 'lintScss', 'styles']);
