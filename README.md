@@ -10,7 +10,7 @@ To generate the output directory `dist/` run the command `gulp`.
 
 Tests are in the `test` directory, with one already there as an example. To run the tests, use the command `gulp test`. This generates the JavaScript files, then runs the tests against them.
 
-You can have the tests auto-run when changed by running the `gulp watchtests` command.
+You can have the tests auto-run when tests or ts files change by running the `gulp watchtests` command.
 
 ## Production
 
