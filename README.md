@@ -8,7 +8,9 @@ To generate the output directory `dist/` run the command `gulp`.
 
 ## Tests
 
-Tests are in the `test` directory, with one already there as an example. To run the tests, use the command `gulp test`. This generates all output files, then runs the tests against them.
+Tests are in the `test` directory, with one already there as an example. To run the tests, use the command `gulp test`. This generates the JavaScript files, then runs the tests against them.
+
+You can have the tests auto-run when changed by running the `gulp watchtests` command.
 
 ## Production
 
@@ -16,6 +18,6 @@ For a production setup, uncomment the lines in `boot.ts` to put Angular in produ
 
 ## Auto-Refresh when Developing
 
-You may want to run `gulp watch` in a stand-alone terminal to have the output automatically updated when you save changes.
+You may run `gulp watch` in a stand-alone terminal to have the output automatically updated when you save changes.
 
 If you install the [fb-flo plugin](https://chrome.google.com/webstore/detail/fb-flo/ahkfhobdidabddlalamkkiafpipdfchp) on Chromium (Chrome) you can have automatic browser refresh as well.

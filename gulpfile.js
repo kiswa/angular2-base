@@ -23,6 +23,7 @@ var gulp = require('gulp'),
     paths = {
         tsconfig: src + 'app/tsconfig.json',
         ts: src + 'app/**/*.ts',
+        tests: 'test/**/*.spec.js',
         html: src + '**/*.html',
         images: src + 'images/**/*.*',
         scss: src + 'scss/**/*.scss',
@@ -141,6 +142,16 @@ gulp.task('watch', function() {
     watchScss.on('change', onChanged);
     watchHtml.on('change', onChanged);
     watchImages.on('change', onChanged);
+});
+
+gulp.task('watchtests', function() {
+    var watchTests = gulp.watch(paths.tests, ['test']),
+
+        onChanged = function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
+        };
+
+    watchTests.on('change', onChanged);
 });
 
 gulp.task('default', ['tsc', 'vendor', 'html', 'images', 'lintScss', 'styles']);
