@@ -16,7 +16,6 @@ var gulp = require('gulp'),
 
     node,
     spawn = require('child_process').spawn,
-    exec = require('child_process').exec,
 
     src = 'src/',
     dist = 'dist/',
