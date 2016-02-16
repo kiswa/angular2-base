@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
 
     scsslint = require('gulp-scss-lint'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     cssPrefixer = require('gulp-autoprefixer'),
     cssMinify = require('gulp-cssnano'),
 
@@ -63,7 +63,8 @@ gulp.task('lintScss', function() {
 });
 
 gulp.task('styles', function() {
-    return sass(paths.scssmain, { precision: 10 })
+    return gulp.src(paths.scssmain)
+        .pipe(sass({ precision: 10 }))
         .pipe(concat('styles.css'))
         .pipe(cssPrefixer())
         .pipe(gulp.dest(dist + 'css/'));
