@@ -13,7 +13,7 @@
   "author": "Matthew Ross <root@matthewross.me> (http://matthewross.me)",
   "license": "MIT",
   "devDependencies": {
-    "angular2": "^2.0.0-beta.12",
+    "angular2": "^2.0.0-beta.13",
     "chai": "^3.5.0",
     "del": "^2.2.0",
     "es6-promise": "^3.0.2",
@@ -34,6 +34,6 @@
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "^0.19.22",
-    "zone.js": "^0.6.6"
+    "zone.js": "^0.6.8"
   }
 }
