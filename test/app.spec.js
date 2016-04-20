@@ -1,3 +1,6 @@
+// This is needed in Angular2-beta.15. Will have to revisit testing.
+global.XMLHttpRequest = function() { return {}; };
+
 require('../dist/js/vendor.js');
 
 var chai = require('chai'),
