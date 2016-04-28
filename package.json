@@ -13,7 +13,11 @@
   "author": "Matthew Ross <root@matthewross.me> (http://matthewross.me)",
   "license": "MIT",
   "devDependencies": {
+<<<<<<< HEAD
     "angular2": "^2.0.0-beta.17",
+=======
+    "angular2": "^2.0.0-beta.16",
+>>>>>>> 56570b1fe2bd0767df0f4822dda9ab4b2e633a54
     "chai": "^3.5.0",
     "del": "^2.2.0",
     "es6-promise": "^3.0.2",
