@@ -1,141 +1,108 @@
 var gulp = require('gulp'),
-    del = require('del'),
     concat = require('gulp-concat'),
-    merge = require('merge-stream'),
 
     tsc = require('gulp-typescript'),
-    jsMinify = require('gulp-uglify'),
     mocha = require('gulp-mocha'),
+    jsMinify = require('gulp-uglify'),
 
-    scsslint = require('gulp-scss-lint'),
+    scssLint = require('gulp-scss-lint'),
     sass = require('gulp-sass'),
     cssPrefixer = require('gulp-autoprefixer'),
     cssMinify = require('gulp-cssnano'),
 
-    imageMin = require('gulp-imagemin'),
+    del = require('del'),
+    merge = require('merge-stream'),
+    SystemBuilder = require('systemjs-builder');
 
-    node,
-    spawn = require('child_process').spawn,
-
-    src = 'src/',
-    dist = 'dist/',
-    paths = {
-        tsconfig: src + 'app/tsconfig.json',
-        ts: src + 'app/**/*.ts',
-        tests: 'test/**/*.spec.js',
-        html: src + '**/*.html',
-        images: src + 'images/**/*.*',
-        scss: src + 'scss/**/*.scss',
-        scssmain: src + 'scss/main.scss',
-        vendor: {
-            js: [
-                'node_modules/angular2/bundles/angular2-polyfills.js',
-                'node_modules/es6-shim/es6-shim.js',
-                'node_modules/systemjs/dist/system.src.js',
-                'node_modules/rxjs/bundles/Rx.js',
-                'node_modules/angular2/bundles/angular2.dev.js'
-            ],
-            css: [
-                'node_modules/normalize.css/normalize.css'
-            ]
-        }
-    };
-
-gulp.task('clean', function() {
-    return del(dist);
+gulp.task('clean', () => {
+    return del('dist');
 });
 
-gulp.task('html', function() {
-    return gulp.src(paths.html)
-        .pipe(gulp.dest(dist));
+gulp.task('shims', () => {
+    return gulp.src([
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/reflect-metadata/Reflect.js'
+        ])
+        .pipe(concat('shims.js'))
+        .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task('images', function() {
-    return gulp.src(paths.images)
-        .pipe(imageMin())
-        .pipe(gulp.dest(dist + 'images/'));
+gulp.task('system-build', [ 'tsc' ], () => {
+    var builder = new SystemBuilder();
+
+    return builder.loadConfig('system.config.js')
+        .then(() => builder.buildStatic('app', 'dist/js/bundle.js'))
+        .then(() => del('build'));
 });
 
-gulp.task('lintScss', function() {
-    return gulp.src(paths.scss)
-        .pipe(scsslint({ config: 'lint.yml' }));
-});
-
-gulp.task('styles', function() {
-    return gulp.src(paths.scssmain)
-        .pipe(sass({ precision: 10 }))
-        .pipe(concat('styles.css'))
-        .pipe(cssPrefixer())
-        .pipe(gulp.dest(dist + 'css/'));
-});
-
-gulp.task('tsc', function() {
-    var tsProject = tsc.createProject(paths.tsconfig),
+gulp.task('tsc', () => {
+    var tsProject = tsc.createProject('tsconfig.json'),
         tsResult = tsProject.src()
             .pipe(tsc(tsProject));
 
     return tsResult.js
-        .pipe(gulp.dest(dist + 'app/'));
+        .pipe(gulp.dest('build/'));
 });
 
-gulp.task('vendor', function() {
-    var js = gulp.src(paths.vendor.js)
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(dist + 'js/'));
-
-    var css = gulp.src(paths.vendor.css)
-        .pipe(concat('vendor.css'))
-        .pipe(gulp.dest(dist + 'css/'));
-
-    return merge(js, css);
+gulp.task('html', () => {
+    return gulp.src('src/**/**.html')
+        .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('minify', function() {
-    var js = gulp.src(dist + 'js/vendor.js')
-        .pipe(jsMinify())
-        .pipe(gulp.dest(dist + 'js/'));
-
-    var css = gulp.src(dist + 'css/vendor.css')
-        .pipe(cssMinify())
-        .pipe(gulp.dest(dist + 'css/'));
-
-    var styles = gulp.src(dist + 'css/styles.css')
-        .pipe(cssMinify())
-        .pipe(gulp.dest(dist + 'css/'));
-
-    var merged = merge(js, css);
-    merged.add(styles);
-
-    return merged;
+gulp.task('lintScss', function() {
+    return gulp.src('src/scss/**/*.scss')
+        .pipe(scssLint({ config: 'lint.yml' }));
 });
 
-gulp.task('test', ['tsc', 'vendor'], function() {
+gulp.task('scss', () => {
+    return gulp.src('src/scss/main.scss')
+        .pipe(sass({
+            precision: 10,
+            includePaths: 'node_modules/node-normalize-scss'
+        }))
+        .pipe(concat('styles.css'))
+        .pipe(cssPrefixer())
+        .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('test-tsc', () => {
+    var tsProject = tsc.createProject('tsconfig.json');
+
+    return tsProject.src()
+        .pipe(tsc(tsProject))
+        .pipe(gulp.dest('test/js/'));
+});
+
+gulp.task('test-run', [ 'test-tsc' ], () => {
     return gulp.src('test/**/*.spec.js')
         .pipe(mocha());
 });
 
-gulp.task('fb-flo', function() {
-    if (node) {
-        node.kill();
-    }
-
-    node = spawn('node', ['flo.js'], { stdio: 'inherit' });
-    node.on('close', function() {
-        console.log('Exiting fb-flo.');
-    });
+gulp.task('test', [ 'test-run' ], () => {
+    return del('test/js');
 });
 
-gulp.task('watch', function() {
-    var watchTs = gulp.watch(paths.ts, ['tsc']),
-        watchScss = gulp.watch(paths.scss, ['lintScss', 'styles']),
-        watchHtml = gulp.watch(paths.html, ['html']),
-        watchImages = gulp.watch(paths.images, ['images']),
+gulp.task('minify', () => {
+    var js = gulp.src('dist/js/bundle.js')
+        .pipe(jsMinify())
+        .pipe(gulp.dest('dist/js/'));
+
+    var css = gulp.src('dist/css/styles.css')
+        .pipe(cssMinify())
+        .pipe(gulp.dest('dist/css/'));
+
+    return merge(js, css);
+});
+
+gulp.task('watch', () => {
+    var watchTs = gulp.watch('src/app/**/**.ts', [ 'system-build' ]),
+        watchScss = gulp.watch('src/scss/**/*.scss', [ 'lintScss', 'styles' ]),
+        watchHtml = gulp.watch('src/**/*.html', [ 'html' ]),
+        watchImages = gulp.watch('src/images/**/*.*', [ 'images' ]),
 
         onChanged = function(event) {
             console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
         };
-
-    gulp.start('fb-flo');
 
     watchTs.on('change', onChanged);
     watchScss.on('change', onChanged);
@@ -143,16 +110,17 @@ gulp.task('watch', function() {
     watchImages.on('change', onChanged);
 });
 
-gulp.task('watchtests', function() {
-    var watchTests = gulp.watch(paths.tests, ['test']),
-        watchTs = gulp.watch(paths.ts, ['test']),
+gulp.task('watchtests', () => {
+    var watchTs = gulp.watch('src/app/**/**.ts', [ 'test-run' ]),
+        watchTests = gulp.watch('test/**/*.spec.js', [ 'test-run' ]),
 
         onChanged = function(event) {
             console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
         };
 
-    watchTests.on('change', onChanged);
-    watchTs.on('change', onChanged);
+        watchTs.on('change', onChanged);
+        watchTests.on('change', onChanged);
 });
 
-gulp.task('default', ['tsc', 'vendor', 'html', 'images', 'lintScss', 'styles']);
+gulp.task('default', [ 'shims', 'system-build', 'html', 'lintScss', 'scss' ]);
+

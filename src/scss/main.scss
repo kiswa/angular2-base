@@ -1,25 +1,5 @@
-html {
-    box-sizing: border-box;
-}
+@import 'normalize';
 
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-}
+@import 'variables';
+@import 'core';
 
-$background: #fff;
-$border: #ccc;
-
-body {
-    background-color: darken($background, 5%);
-}
-
-.container {
-    background-color: $background;
-    border: 1px solid $border;
-    display: block;
-    margin: 1em auto;
-    padding: 1em;
-    width: 50%;
-}

@@ -1,0 +1,13 @@
+body {
+    background-color: darken($background, 5%);
+}
+
+.container {
+    background-color: $background;
+    border: 1px solid $border;
+    display: block;
+    margin: 1em auto;
+    padding: 1em;
+    width: 50%;
+}
+

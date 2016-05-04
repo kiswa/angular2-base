@@ -7,3 +7,4 @@ linters:
 
     SelectorDepth:
         max_depth: 4
+
