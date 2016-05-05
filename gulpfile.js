@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     tsc = require('gulp-typescript'),
     mocha = require('gulp-mocha'),
     jsMinify = require('gulp-uglify'),
+    imagemin = require('gulp-imagemin'),
 
     scssLint = require('gulp-scss-lint'),
     sass = require('gulp-sass'),
@@ -47,6 +48,12 @@ gulp.task('tsc', () => {
 gulp.task('html', () => {
     return gulp.src('src/**/**.html')
         .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('images', () => {
+    return gulp.src('src/images/**/*.*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/images/'));
 });
 
 gulp.task('lintScss', function() {
@@ -122,5 +129,12 @@ gulp.task('watchtests', () => {
         watchTests.on('change', onChanged);
 });
 
-gulp.task('default', [ 'shims', 'system-build', 'html', 'lintScss', 'scss' ]);
+gulp.task('default', [
+    'shims',
+    'system-build',
+    'html',
+    'images',
+    'lintScss',
+    'scss'
+]);
 
