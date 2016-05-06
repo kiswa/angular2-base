@@ -103,7 +103,7 @@ gulp.task('minify', () => {
 
 gulp.task('watch', () => {
     var watchTs = gulp.watch('src/app/**/**.ts', [ 'system-build' ]),
-        watchScss = gulp.watch('src/scss/**/*.scss', [ 'lintScss', 'styles' ]),
+        watchScss = gulp.watch('src/scss/**/*.scss', [ 'lintScss', 'scss' ]),
         watchHtml = gulp.watch('src/**/*.html', [ 'html' ]),
         watchImages = gulp.watch('src/images/**/*.*', [ 'images' ]),
 
