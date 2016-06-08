@@ -21,6 +21,7 @@ gulp.task('clean', () => {
 
 gulp.task('shims', () => {
     return gulp.src([
+            'node_modules/core-js/client/shim.js',
             'node_modules/zone.js/dist/zone.js',
             'node_modules/reflect-metadata/Reflect.js'
         ])
