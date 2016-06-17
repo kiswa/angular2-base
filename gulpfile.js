@@ -38,7 +38,11 @@ gulp.task('system-build', [ 'tsc' ], () => {
 });
 
 gulp.task('tsc', () => {
-    var tsProject = tsc.createProject('tsconfig.json'),
+    // Custom typescript version is temporary until @angular/router is fixed
+    // TODO: Remove options and remove typescript from package.json
+    var tsProject = tsc.createProject('tsconfig.json', {
+            typescript: require('typescript')
+        }),
         tsResult = tsProject.src()
             .pipe(tsc(tsProject));
 
