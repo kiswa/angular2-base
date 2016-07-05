@@ -2,6 +2,8 @@
 
 A simple base project for Angular 2 apps, using Gulp to automate tasks and SystemJS to bundle the app.
 
+Includes examples following the [official style guide](https://angular.io/docs/ts/latest/guide/style-guide.html) to create components, templates (inline and separate), and routes (using the latest router). Uses [Gulp](http://gulpjs.com/) to automate tasks and [systemjs-builder](https://github.com/systemjs/builder) to package files.
+
 ## Usage
 
 Clone the repo to where you want to use it, then install the npm packages with `npm i`. You may also need to run `gem install scss-lint` for the linter to work.
