@@ -73,21 +73,13 @@ gulp.task('scss', () => {
         .pipe(gulp.dest('dist/css/'));
 });
 
-gulp.task('test-tsc', () => {
-    var tsProject = tsc.createProject('tsconfig.json');
-
-    return tsProject.src()
-        .pipe(tsc(tsProject))
-        .pipe(gulp.dest('test/js/'));
-});
-
-gulp.task('test-run', [ 'test-tsc' ], () => {
+gulp.task('test-run', [ 'tsc' ], () => {
     return gulp.src('test/**/*.spec.js')
         .pipe(mocha());
 });
 
 gulp.task('test', [ 'test-run' ], () => {
-    return del('test/js');
+    return del('build');
 });
 
 gulp.task('minify', () => {
