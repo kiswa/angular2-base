@@ -6,7 +6,8 @@ import { ExampleComponent } from './example/example.component';
 @Component({
     selector: 'app-component',
     // Using backticks allows multi-line templates.
-    // This should be in a separate file, but is inline as an example.
+    // This is long enought to be in a separate file,
+    // but is inline as an example.
     template: `
     <div class="container">
         <h1>My Angular 2 Base App</h1>
@@ -16,10 +17,7 @@ import { ExampleComponent } from './example/example.component';
         </p>
         <router-outlet></router-outlet>
     </div>`,
-    directives: [
-        ExampleComponent,
-        ROUTER_DIRECTIVES
-    ]
+    directives: [ ROUTER_DIRECTIVES ]
 })
 export class AppComponent {
     public isTestable: boolean = true;
