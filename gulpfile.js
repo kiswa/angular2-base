@@ -122,12 +122,12 @@ gulp.task('watchtests', () => {
     var watchTs = gulp.watch('src/app/**/**.ts', [ 'test-run' ]),
         watchTests = gulp.watch('test/**/*.spec.js', [ 'test-run' ]),
 
-        onChanged = function(event) {
-            console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
-        };
+    onChanged = function(event) {
+        console.log('File ' + event.path + ' was ' + event.type + '. Running tasks...');
+    };
 
-        watchTs.on('change', onChanged);
-        watchTests.on('change', onChanged);
+    watchTs.on('change', onChanged);
+    watchTests.on('change', onChanged);
 });
 
 gulp.task('default', [
