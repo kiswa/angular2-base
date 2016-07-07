@@ -6,7 +6,7 @@ import { ExampleComponent } from './example/example.component';
 @Component({
     selector: 'app-component',
     // Using backticks allows multi-line templates.
-    // This is long enought to be in a separate file,
+    // This is long enough to be in a separate file,
     // but is inline as an example.
     template: `
     <div class="container">
