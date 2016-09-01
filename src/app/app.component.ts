@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { ExampleComponent } from './example/example.component';
 
@@ -16,8 +15,7 @@ import { ExampleComponent } from './example/example.component';
             <a [routerLink]="['/about']">About</a>
         </p>
         <router-outlet></router-outlet>
-    </div>`,
-    directives: [ ROUTER_DIRECTIVES ]
+    </div>`
 })
 export class AppComponent {
     public isTestable: boolean = true;
