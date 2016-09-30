@@ -1,19 +1,20 @@
 var gulp = require('gulp'),
-    concat = require('gulp-concat'),
+    del = require('del'),
+    merge = require('merge-stream'),
 
     tsc = require('gulp-typescript'),
-    mocha = require('gulp-mocha'),
+    tsProject = tsc.createProject('tsconfig.json'),
+    SystemBuilder = require('systemjs-builder'),
     jsMinify = require('gulp-uglify'),
+
+    mocha = require('gulp-mocha'),
+    concat = require('gulp-concat'),
     imagemin = require('gulp-imagemin'),
 
     scssLint = require('gulp-scss-lint'),
     sass = require('gulp-sass'),
     cssPrefixer = require('gulp-autoprefixer'),
-    cssMinify = require('gulp-cssnano'),
-
-    del = require('del'),
-    merge = require('merge-stream'),
-    SystemBuilder = require('systemjs-builder');
+    cssMinify = require('gulp-cssnano');
 
 gulp.task('clean', () => {
     return del('dist');
@@ -38,11 +39,10 @@ gulp.task('system-build', [ 'tsc' ], () => {
 });
 
 gulp.task('tsc', () => {
-    var tsProject = tsc.createProject('tsconfig.json'),
-        tsResult = tsProject.src()
-            .pipe(tsc(tsProject));
+    del('build');
 
-    return tsResult.js
+    return gulp.src('src/app/**/*.ts')
+        .pipe(tsProject())
         .pipe(gulp.dest('build/'));
 });
 
@@ -57,7 +57,7 @@ gulp.task('images', () => {
         .pipe(gulp.dest('dist/images/'));
 });
 
-gulp.task('lintScss', function() {
+gulp.task('scss-lint', function() {
     return gulp.src('src/scss/**/*.scss')
         .pipe(scssLint({ config: 'lint.yml' }));
 });
@@ -96,7 +96,7 @@ gulp.task('minify', () => {
 
 gulp.task('watch', () => {
     var watchTs = gulp.watch('src/app/**/**.ts', [ 'system-build' ]),
-        watchScss = gulp.watch('src/scss/**/*.scss', [ 'lintScss', 'scss' ]),
+        watchScss = gulp.watch('src/scss/**/*.scss', [ 'scss-lint', 'scss' ]),
         watchHtml = gulp.watch('src/**/*.html', [ 'html' ]),
         watchImages = gulp.watch('src/images/**/*.*', [ 'images' ]),
 
@@ -127,7 +127,7 @@ gulp.task('default', [
     'system-build',
     'html',
     'images',
-    'lintScss',
+    'scss-lint',
     'scss'
 ]);
 
